@@ -183,7 +183,7 @@ public class AsyncOperationAdapterTest {
                             .set("error", true)
                             .set("rollback", true)
                             .executeReturningExceptionEntity(SC_INTERNAL_SERVER_ERROR);
-        assertEquals("Failed to invoke operation Test.Exit", error);
+        assertEquals("termination error", error);
     }
 
     @Test

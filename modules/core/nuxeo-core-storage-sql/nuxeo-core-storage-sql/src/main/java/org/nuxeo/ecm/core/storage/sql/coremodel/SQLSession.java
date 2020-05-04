@@ -36,10 +36,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import javax.transaction.xa.XAException;
-import javax.transaction.xa.XAResource;
-import javax.transaction.xa.Xid;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.nuxeo.ecm.core.api.CoreSession;
@@ -951,62 +947,27 @@ public class SQLSession implements Session<QueryFilter> {
     }
 
     /*
-     * ----- Transaction / XAResource -----
+     * ----- Transaction management -----
      */
 
     @Override
-    public void beforeCompletion() {
-        session.beforeCompletion();
+    public void start() {
+        session.start();
     }
 
     @Override
-    public void start(Xid xid, int flags) throws XAException {
-        session.start(xid, flags);
+    public void end() {
+        session.end();
     }
 
     @Override
-    public int prepare(Xid xid) throws XAException {
-        return session.prepare(xid);
+    public void commit() {
+        session.commit();
     }
 
     @Override
-    public void commit(Xid xid, boolean onePhase) throws XAException {
-        session.commit(xid, onePhase);
-    }
-
-    @Override
-    public void rollback(Xid xid) throws XAException {
-        session.rollback(xid);
-    }
-
-    @Override
-    public void end(Xid xid, int flags) throws XAException {
-        session.end(xid, flags);
-    }
-
-    @Override
-    public boolean isSameRM(XAResource xaRes) throws XAException {
-        return xaRes == this;
-    }
-
-    @Override
-    public void forget(Xid xid) throws XAException {
-        session.forget(xid);
-    }
-
-    @Override
-    public Xid[] recover(int flag) throws XAException {
-        return session.recover(flag);
-    }
-
-    @Override
-    public boolean setTransactionTimeout(int seconds) throws XAException {
-        return session.setTransactionTimeout(seconds);
-    }
-
-    @Override
-    public int getTransactionTimeout() throws XAException {
-        return session.getTransactionTimeout();
+    public void rollback() {
+        session.rollback();
     }
 
 }

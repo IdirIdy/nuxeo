@@ -31,9 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.transaction.xa.XAException;
-import javax.transaction.xa.Xid;
-
 /**
  * A {@link RowMapper} maps {@link Row}s to and from the database.
  * <p>
@@ -451,10 +448,10 @@ public interface RowMapper {
     long getCacheSize();
 
     /**
-     * Rollback the XA Resource.
+     * Rollback the transaction.
      * <p>
      * This is in the {@link RowMapper} interface because on rollback the cache must be invalidated.
      */
-    void rollback(Xid xid) throws XAException;
+    void rollback();
 
 }
